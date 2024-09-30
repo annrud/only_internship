@@ -1,0 +1,341 @@
+.input__input {
+    width: 100%;
+    height: 100%;
+    font-size: 1.4rem;
+    color: #172c5f;
+    border: 1px solid transparent;
+    padding: 0 30px;
+    transition: border .3s;
+    outline: none
+}
+
+.input__label {
+    display: block;
+}
+
+.input__input.invalid {
+    border: 1px solid #eb5757
+}
+
+.input__input.invalid + .input__notification {
+    opacity: 1;
+    visibility: visible
+}
+
+.input__icon {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    width: 60px;
+    height: 100%;
+    transform: translateY(-50%);
+    padding: 12px;
+    cursor: pointer
+}
+
+.input__icon svg {
+    width: 100%;
+    height: 100%
+}
+
+.input__notification {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 14px;
+    color: #eb5757;
+    transform: translateY(130%);
+    opacity: 0;
+    visibility: hidden
+}
+
+.input.input__search .input__input {
+    padding: 0 80px 0 30px
+}
+
+.input.input__search .input__input::-webkit-input-placeholder {
+    color: #172c5f
+}
+
+.input.input__search .input__input::-moz-placeholder {
+    color: #172c5f
+}
+
+.input.input__search .input__input:-ms-input-placeholder {
+    color: #172c5f
+}
+
+.input.input__search .input__input::-ms-input-placeholder {
+    color: #172c5f
+}
+
+.input.input__search .input__input::placeholder {
+    color: #172c5f
+}
+
+.contact-form {
+    background-color: #f5f5f6;
+    padding: 2vw
+}
+
+.contact-form__head {
+    display: flex;
+    margin-bottom: 40px
+}
+
+.contact-form__head-title {
+    width: 20.83335vw;
+    font-size: 2.5rem;
+    color: #172c5f;
+    line-height: 1.5;
+    margin-right: 4.16667vw
+}
+
+.contact-form__head-text {
+    width: 45.83337vw;
+    font-size: 1.6rem;
+    color: #172c5f;
+    line-height: 1.7;
+    padding-top: 20px
+}
+
+.contact-form__form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between
+}
+
+.contact-form__form-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 21vw
+}
+
+.contact-form__form-message {
+    position: relative;
+    width: 24vw;
+    height: 100%
+}
+
+.contact-form__input {
+    width: 10vw;
+    height: auto;
+    margin-right: 1vw;
+    margin-bottom: 20px
+}
+
+.contact-form__input:nth-child(2n) {
+    margin-right: 0
+}
+
+.contact-form__input input {
+    height: 60px
+}
+
+.contact-form__bottom {
+    display: flex;
+    width: 100%;
+    padding-left: 11vw;
+    margin-top: 20px
+}
+
+.contact-form__bottom-policy {
+    width: 50.00004vw;
+    font-size: 1.4rem;
+    color: #172c5f;
+    line-height: 1.7
+}
+
+.contact-form__bottom-button {
+    width: 12.50001vw;
+    min-width: 220px;
+    height: 80px;
+    font-size: 1.4rem;
+    color: #172c5f;
+    margin-left: 4.16667vw;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    transition: color .3s
+}
+
+.contact-form__bottom-button.disabled {
+    color: rgba(23, 44, 95, .5)
+}
+
+.contact-form__bottom-button.error {
+    color: #eb5757;
+    border: 1px solid #eb5757
+}
+
+.form-button, .form-button:focus {
+    outline: none
+}
+
+@media (min-width: 320px) {
+    .contact-form__form-message textarea {
+        height: 100%;
+        min-height: 185px;
+        resize: none;
+        padding: 24px 30px;
+        margin: 0
+    }
+}
+
+@media (max-width: 767.98px) {
+    .input__icon {
+        right: 0
+    }
+
+    .input.input__search .input__input {
+        padding: 0 60px 0 20px
+    }
+
+    .contact-form__form-message textarea {
+        min-height: 140px
+    }
+}
+
+@media (min-width: 1200px) {
+    .contact-form__head {
+        margin-bottom: 60px
+    }
+
+    .contact-form__head-title {
+        font-size: 40px
+    }
+
+    .contact-form__head-text, .os-ios .contact-form__head-title {
+        font-size: 20px
+    }
+
+    .os-ios .contact-form__head-text {
+        font-size: 20px
+    }
+
+    .contact-form__input {
+        margin-bottom: 40px
+    }
+
+    .contact-form__bottom {
+        margin-top: 20px
+    }
+
+    .contact-form__bottom-policy {
+        font-size: 16px
+    }
+
+    .os-ios .contact-form__bottom-policy {
+        font-size: 1.4rem
+    }
+
+    .contact-form__bottom-button {
+        font-size: 16px
+    }
+
+    .os-ios .contact-form__bottom-button {
+        font-size: 1.4rem
+    }
+
+    .input__input {
+        font-size: 16px
+    }
+
+    .os-ios .input__input {
+        font-size: 1.4rem
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .contact-form, .section-content {
+        padding-left: 60px;
+        padding-right: 60px
+    }
+
+    .contact-form__head {
+        flex-direction: column
+    }
+
+    .contact-form__head-title {
+        width: 100%;
+        margin-bottom: 40px
+    }
+
+    .contact-form__head-text {
+        width: 100%
+    }
+
+    .contact-form__form-inputs {
+        margin-right: 4.16667vw
+    }
+
+    .contact-form__form-inputs, .contact-form__form-message {
+        width: 100%;
+        flex-direction: column
+    }
+
+    .contact-form__form {
+        flex-direction: column
+    }
+
+    .contact-form__input {
+        width: 100%;
+        height: auto;
+        margin-right: 0
+    }
+
+    .contact-form__bottom {
+        padding-left: 0
+    }
+
+    .contact-form__bottom-policy {
+        width: 58.33338vw
+    }
+
+    .contact-form__bottom-button {
+        width: 25.00002vw
+    }
+}
+
+@media print {
+    .contact-form {
+        display: none
+    }
+}
+
+@media print and (max-width: 1199.98px) {
+    .contact-form, .section-content {
+        padding-left: 0;
+        padding-right: 0
+    }
+}
+
+@media (max-width: 1199.98px) and (max-width: 767.98px) {
+    .contact-form, .section-content {
+        padding-left: 30px;
+        padding-right: 30px
+    }
+
+    .contact-form__bottom {
+        flex-direction: column
+    }
+
+    .contact-form__bottom-policy {
+        width: 100%;
+        font-size: 12px
+    }
+
+    .contact-form__bottom-button {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 20px
+    }
+}
+
+@media print and (max-width: 1199.98px) and (max-width: 767.98px) {
+    .contact-form, .section-content {
+        padding-left: 0;
+        padding-right: 0
+    }
+}
