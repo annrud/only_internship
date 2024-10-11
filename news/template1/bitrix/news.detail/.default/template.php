@@ -61,18 +61,7 @@ $this->setFrameMode(true);
                     {
                         ?><?=GetMessage("IBLOCK_FIELD_".$code)?>:&nbsp;<?=$value;?><?
                     }
-                    ?>
-                <?endforeach;
-                foreach($arResult["DISPLAY_PROPERTIES"] as $pid=>$arProperty):?>
-
-                    <?=$arProperty["NAME"]?>:&nbsp;
-                    <?if(is_array($arProperty["DISPLAY_VALUE"])):?>
-                        <?=implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);?>
-                    <?else:?>
-                        <?=$arProperty["DISPLAY_VALUE"];?>
-                    <?endif?>
-                    <br />
-                <?endforeach;?>
+                endforeach;?>
                 <a class="article-card__button" href="<?=$arResult["LIST_PAGE_URL"]?>"><?=GetMessage("T_NEWS_DETAIL_BACK")?></a>
             </div>
         </div>
