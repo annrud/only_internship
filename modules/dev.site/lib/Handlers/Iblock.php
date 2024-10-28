@@ -31,7 +31,9 @@ class Iblock
 
         $elementPreview = self::generateElementPreview($iblockSectionId, $iblock['NAME'], $elementName);
 
-        $sectionLogId = self::getOrCreateLogSection($iblockLog['ID'], $iblock['NAME'], $iblock['CODE']);
+        $sectionLogId = $iblockSectionId
+            ? self::getOrCreateSectionLog($iblockLog['ID'], $iblockSectionId)
+            : self::getOrCreateSectionLogMain($iblockLog['ID'], $iblockId);
 
         $elementLog= new CIBlockElement;
         $arLoadArray = [
@@ -39,60 +41,88 @@ class Iblock
             'IBLOCK_ID' => $iblockLog['ID'],
             'NAME' => $elementId,
             'CODE' => $elementId,
-            'ACTIVE' => "Y",
+            'ACTIVE' => 'Y',
             'ACTIVE_FROM' => $date,
             'IBLOCK_SECTION_ID' => $sectionLogId,
             'PREVIEW_TEXT' => $elementPreview
         ];
-
         $arFilter = [
-            "IBLOCK_ID" => $iblockLog['ID'],
-            "NAME" => $elementId
+            'IBLOCK_ID' => $iblockLog['ID'],
+            'NAME' => $elementId
         ];
         $elementDesired = CIBlockElement::GetList([], $arFilter, false, false, ['ID'])->Fetch();
 
         if ($elementDesired) {
             if ($elementLog->Update($elementDesired['ID'], $arLoadArray)) {
-                echo "Элемент успешно обновлен.";
+                echo 'Элемент успешно обновлен.';
             } else {
-                echo "Ошибка при обновлении элемента: " . $elementLog->LAST_ERROR;
+                echo 'Ошибка при обновлении элемента: ' . $elementLog->LAST_ERROR;
             }
         } else {
             if ($elementLog->Add($arLoadArray)) {
-                echo "Элемент успешно добавлен.";
+                echo 'Элемент успешно добавлен.';
             } else {
-                echo "Ошибка при добавлении элемента: " . $elementLog->LAST_ERROR;
+                echo 'Ошибка при добавлении элемента: ' . $elementLog->LAST_ERROR;
             }
         }
     }
-
     /**
      * Поиск или создание раздела в инфоблоке LOG
      */
-    private static function getOrCreateLogSection($iblockLogId, $iblockName, $iblockCode)
+    private static function getOrCreateSectionLog($iblockLogId, $sectionId)
     {
-        $section = CIBlockSection::GetList(
+        $section = CIBlockSection::GetByID($sectionId)->Fetch();
+        $sectionLog = CIBlockSection::GetList(
             [],
-            ['IBLOCK_ID' => $iblockLogId, 'CODE' => $iblockCode],
+            ['IBLOCK_ID' => $iblockLogId, 'CODE' => $section['CODE']],
             false,
-            ['ID'],
+            ['ID']
         )->Fetch();
 
-        if ($section) {
-            return $section['ID'];
+        if ($sectionLog) {
+            return $sectionLog['ID'];
         }
-
-        $section = new CIBlockSection;
+        $sectionLog = new CIBlockSection;
         $arFields = [
-            "IBLOCK_ID" => $iblockLogId,
-            "NAME" => $iblockName,
-            "CODE" => $iblockCode,
-            "ACTIVE" => "Y"
+            'IBLOCK_ID' => $iblockLogId,
+            'NAME' => $section['NAME'],
+            'CODE' => $section['CODE'],
+            'IBLOCK_SECTION_ID' => $section['IBLOCK_SECTION_ID']
+                ? self::getOrCreateSectionLog($iblockLogId, $section['IBLOCK_SECTION_ID'])
+                : self::getOrCreateSectionLogMain($iblockLogId, $section['IBLOCK_ID']),
+            'ACTIVE' => 'Y'
         ];
 
-        return $section->Add($arFields);
+        return $sectionLog->Add($arFields);
     }
+    /**
+     * Поиск или создание главного раздела в инфоблоке LOG
+     */
+    private static function getOrCreateSectionLogMain($iblockLogId, $iblockId)
+    {
+        $iblockMain = CIBlock::GetByID($iblockId)->Fetch();
+        $iblockLogMain = CIBlockSection::GetList(
+            [],
+            ['IBLOCK_ID' => $iblockLogId, 'CODE' => $iblockMain['CODE']],
+            false,
+            ['ID']
+        )->Fetch();
+        if ($iblockLogMain) {
+            return $iblockLogMain['ID'];
+        }
+        $sectionLog = new CIBlockSection;
+        $arFields = [
+            'IBLOCK_ID' => $iblockLogId,
+            'NAME' => $iblockMain['NAME'],
+            'CODE' => $iblockMain['CODE'],
+            'ACTIVE' => 'Y'
+        ];
 
+        return $sectionLog->Add($arFields);
+    }
+    /**
+     * Наполнение массива наименованиями разделов
+     */
     private static function getSectionNames($sectionId, &$result): void
     {
         if (!$sectionId) {
